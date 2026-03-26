@@ -1,0 +1,38 @@
+[
+  {
+    "source_file": "accounts.csv",
+    "target_table": "accounts",
+    "s3_bucket": "mini-project-raw-data",
+    "s3_path": "datasets"
+  },
+  {
+    "source_file": "company.csv",
+    "target_table": "company",
+    "s3_bucket": "mini-project-raw-data",
+    "s3_path": "datasets"
+  },
+  {
+    "source_file": "departments.csv",
+    "target_table": "departments",
+    "s3_bucket": "mini-project-raw-data",
+    "s3_path": "datasets"
+  },
+  {
+    "source_file": "employee.csv",
+    "target_table": "employee",
+    "s3_bucket": "mini-project-raw-data",
+    "s3_path": "datasets"
+  },
+  {
+    "source_file": "general ledgers.csv",
+    "target_table": "general_ledgers",
+    "s3_bucket": "mini-project-raw-data",
+    "s3_path": "datasets"
+  },
+  {
+    "source_file": "payroll.csv",
+    "target_table": "payroll",
+    "s3_bucket": "mini-project-raw-data",
+    "s3_path": "datasets"
+  }
+]
