@@ -1,4 +1,4 @@
-#Databricks Mini Project – P&L AND WORFORCE ANALYSIS
+# Databricks Mini Project – P&L AND WORFORCE ANALYSIS
 
 ##Project Overview
 
