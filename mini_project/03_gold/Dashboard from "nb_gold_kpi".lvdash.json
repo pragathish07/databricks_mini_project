@@ -230,6 +230,12 @@
       ],
       "pageType": "PAGE_TYPE_CANVAS",
       "layoutVersion": "GRID_V1"
+    },
+    {
+      "name": "9527e1fe",
+      "displayName": "Global Filters",
+      "pageType": "PAGE_TYPE_GLOBAL_FILTERS",
+      "layoutVersion": "GRID_V1"
     }
   ],
   "uiSettings": {
