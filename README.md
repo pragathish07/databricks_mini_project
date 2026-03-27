@@ -1,22 +1,22 @@
 # Databricks Mini Project – P&L AND WORFORCE ANALYSIS
 
-##Project Overview
+## Project Overview
 
 This project implements a complete Medallion Architecture data lakehouse solution for financial and HR analytics. The project processes raw CSV files stored in S3, transforms them through bronze and silver layers, and creates a dimensional data model with KPIs in the gold layer.
 
 
-###Architecture: Bronze → Silver → Gold (Medallion/Delta Lake Architecture)
-###Catalog: mini_project
-###Storage: AWS S3 (s3://db-lakehouse-s3/lakehouse/)
-###Compute: Serverless SQL Warehouse
+### Architecture: Bronze → Silver → Gold (Medallion/Delta Lake Architecture)
+### Catalog: mini_project
+### Storage: AWS S3 (s3://db-lakehouse-s3/lakehouse/)
+### Compute: Serverless SQL Warehouse
 
 
-##Layer 1: Bronze Layer (Raw Data Ingestion)
+## Layer 1: Bronze Layer (Raw Data Ingestion)
 
 Ingest raw CSV files from S3 into Delta tables with minimal transformation.
 
-###Schema: mini_project.bronze
-###Notebook: nb_bronze_ingestion
+### Schema: mini_project.bronze
+### Notebook: nb_bronze_ingestion
 
 Process:
 1.	Creates bronze schema with managed location in S3
@@ -24,7 +24,7 @@ Process:
 3.	Iterates through configuration to create tables from CSV files using read_files()
 4.	Maintains raw data types with schema inference
 
-###Source Tables Created:
+### Source Tables Created:
 •	employee - Employee master data
 •	company - Company information
 •	departments - Department structure
@@ -33,27 +33,27 @@ Process:
 •	payroll - Payroll transactions
 
 
-##Layer 2: Silver Layer (Cleaned & Standardized)
+## Layer 2: Silver Layer (Cleaned & Standardized)
 
 Clean, standardize, and validate data from bronze layer.
 Schema: mini_project.silver
 
-###Notebooks:
+### Notebooks:
 •	nb_silver_schema - Creates silver schema
 •	nb_silver - Performs data transformations
 
 
-##Layer 3: Gold Layer (Analytics-Ready)
+## Layer 3: Gold Layer (Analytics-Ready)
 
 Create dimensional model and business KPIs for analytics and reporting.
 Schema: mini_project.gold
 
 
-##Part A: Dimensional Data Mart
+## Part A: Dimensional Data Mart
 
-###Notebook: nb_gold_datamart
+### Notebook: nb_gold_datamart
 
-###Dimension Tables:
+### Dimension Tables:
 
 1. dim_date
 2. dim_company
@@ -62,22 +62,22 @@ Schema: mini_project.gold
 5. dim_employee
 6. dim_position
 
-###Fact Tables:
+### Fact Tables:
 
 1. fact_general_ledger
 2. fact_payroll
 
 
 
-##Part B: Data Cube for KPI Aggregation
+## Part B: Data Cube for KPI Aggregation
 
-###Notebook: nb_gold_data_cube
+### Notebook: nb_gold_data_cube
 
-###datacube_kpi
+### datacube_kpi
 •	Purpose: Pre-aggregated monthly metrics at company and department level
 •	Grain: One row per company, department, year, month
 
-###Measures:
+### Measures:
 •	Revenue Metrics:
 o	gl_revenue
 o	gl_cogs
@@ -96,12 +96,12 @@ o	net_margin_pct
 o	revenue_per_employee
 o	cost_per_employee
 
-###Source: Joins gl_monthly and payroll_monthly CTEs
+### Source: Joins gl_monthly and payroll_monthly CTEs
 
 
-##Part C: Business KPIs
+## Part C: Business KPIs
 
-###Notebook: nb_gold_kpi
+### Notebook: nb_gold_kpi
 
 Creates 10 specific KPI tables for business reporting:
 
@@ -128,7 +128,7 @@ KPI 10: kpi_payroll_revenue_ratio
 
 
 
-##Data Flow Summary
+## Data Flow Summary
 
 S3 CSV Files
     ↓
@@ -146,7 +146,7 @@ S3 CSV Files
 
     
 
-##Key Technical Patterns
+## Key Technical Patterns
 1.	Medallion Architecture: Bronze (raw) → Silver (cleansed) → Gold (curated)
 2.	Delta Lake: All tables stored as Delta format
 3.	Dimensional Modeling: Star schema with facts and dimensions
@@ -158,7 +158,7 @@ S3 CSV Files
 9.	Presentation Dashboard : created KPI dashboards
 
    
-##Business Analytics Use Cases
+## Business Analytics Use Cases
 •	Financial Reporting: P&L, revenue trends, margin analysis
 •	HR Analytics: Headcount, compensation benchmarking, payroll ratios
 •	Cost Management: Department-level cost tracking, efficiency metrics
