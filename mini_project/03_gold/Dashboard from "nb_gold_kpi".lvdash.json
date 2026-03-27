@@ -1,0 +1,270 @@
+{
+  "datasets": [
+    {
+      "name": "edd5bddc",
+      "displayName": "KPI 1: Monthly Consolidated Revenue",
+      "queryLines": [
+        "SELECT SUM(total_revenue) AS total_revenue\n",
+        "FROM mini_project.gold.kpi_monthly_revenue;"
+      ],
+      "catalog": "mini_project",
+      "schema": "gold"
+    },
+    {
+      "name": "608469a9",
+      "displayName": "Monthly Revenue Performance Overview Dataset",
+      "queryLines": [
+        "SELECT * FROM mini_project.gold.kpi_monthly_revenue;"
+      ]
+    },
+    {
+      "name": "aceeaeb1",
+      "displayName": "revenue trend",
+      "queryLines": [
+        "SELECT \r\n",
+        "  year,\r\n",
+        "  month,\r\n",
+        "  SUM(total_revenue) AS revenue\r\n",
+        "FROM mini_project.gold.kpi_monthly_revenue\r\n",
+        "GROUP BY year, month\r\n",
+        "ORDER BY year, month;"
+      ]
+    },
+    {
+      "name": "f19db785",
+      "displayName": "expense",
+      "queryLines": [
+        "SELECT\r\n",
+        "  year,\r\n",
+        "  month,\r\n",
+        "  department_name AS expense_dept,\r\n",
+        "  SUM(total_operating_expenses) AS expense_amount\r\n",
+        "FROM mini_project.gold.kpi_operating_expenses\r\n",
+        "GROUP BY year, month, expense_dept;"
+      ]
+    },
+    {
+      "name": "abb51c1a",
+      "displayName": "payroll vs revenue",
+      "queryLines": [
+        "SELECT\r\n",
+        "  year,\r\n",
+        "  month,\r\n",
+        "  SUM(payroll_total_compensation) AS payroll,\r\n",
+        "  SUM(gl_revenue) AS revenue\r\n",
+        "FROM mini_project.gold.datacube_kpi\r\n",
+        "GROUP BY year, month;"
+      ]
+    },
+    {
+      "name": "f1287d6c",
+      "displayName": "MoM growth",
+      "queryLines": [
+        "SELECT\r\n",
+        "  year,\r\n",
+        "  month,\r\n",
+        "  SUM(gl_revenue) AS revenue,\r\n",
+        "  LAG(SUM(gl_revenue)) OVER (ORDER BY year, month) AS prev_revenue\r\n",
+        "FROM mini_project.gold.datacube_kpi\r\n",
+        "GROUP BY year, month;"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "name": "52e1296e",
+      "displayName": "dashboard",
+      "layout": [
+        {
+          "widget": {
+            "name": "60c6f399",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "edd5bddc",
+                  "fields": [
+                    {
+                      "name": "sum(total_revenue)",
+                      "expression": "SUM(`total_revenue`)"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "IN_RANGE(`total_revenue`, NULL, NULL)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "sum(total_revenue)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 0,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "ac112cf6",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "aceeaeb1",
+                  "fields": [
+                    {
+                      "name": "sum(month)",
+                      "expression": "SUM(`month`)"
+                    },
+                    {
+                      "name": "revenue",
+                      "expression": "`revenue`"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "IN_RANGE(`month`, 1, 12)"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "frame": {
+                "showTitle": false
+              },
+              "widgetType": "line",
+              "encodings": {
+                "x": {
+                  "fieldName": "sum(month)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "revenue",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 6,
+            "y": 0,
+            "width": 6,
+            "height": 6
+          }
+        },
+        {
+          "widget": {
+            "name": "f8b0b1bc",
+            "queries": [
+              {
+                "name": "main_query",
+                "query": {
+                  "datasetName": "f19db785",
+                  "fields": [
+                    {
+                      "name": "month",
+                      "expression": "`month`"
+                    },
+                    {
+                      "name": "sum(expense_amount)",
+                      "expression": "SUM(`expense_amount`)"
+                    }
+                  ],
+                  "filters": [
+                    {
+                      "expression": "`expense_dept` IN ('Administration')"
+                    }
+                  ],
+                  "disaggregated": false
+                }
+              }
+            ],
+            "spec": {
+              "version": 3,
+              "widgetType": "bar",
+              "encodings": {
+                "x": {
+                  "fieldName": "month",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                },
+                "y": {
+                  "fieldName": "sum(expense_amount)",
+                  "scale": {
+                    "type": "quantitative"
+                  }
+                }
+              }
+            }
+          },
+          "position": {
+            "x": 0,
+            "y": 6,
+            "width": 6,
+            "height": 6
+          }
+        }
+      ],
+      "pageType": "PAGE_TYPE_CANVAS",
+      "layoutVersion": "GRID_V1"
+    }
+  ],
+  "uiSettings": {
+    "theme": {
+      "canvasBackgroundColor": {
+        "light": "#1F1B2E",
+        "dark": "#0C0B1D"
+      },
+      "widgetBackgroundColor": {
+        "light": "#2A2442",
+        "dark": "#1B1833"
+      },
+      "widgetBorderColor": {
+        "light": "#5E5A80",
+        "dark": "#3F3B60"
+      },
+      "fontColor": {
+        "light": "#FDFDFD",
+        "dark": "#F5F5F5"
+      },
+      "selectionColor": {
+        "light": "#FF6EC7",
+        "dark": "#FF6EC7"
+      },
+      "visualizationColors": [
+        "#FF6EC7",
+        "#00FFF7",
+        "#BF00FF",
+        "#FF5F1F",
+        "#FFFF4D",
+        "#D9007F",
+        "#007FFF"
+      ],
+      "widgetHeaderAlignment": "LEFT"
+    },
+    "applyModeEnabled": false
+  }
+}
